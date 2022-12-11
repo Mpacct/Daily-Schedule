@@ -3,7 +3,24 @@
 // in the html.
 var currentDay = dayjs();
 console.log(currentDay);
-$("#currentDay").text(currentDay.format("[Today is ]MMMM D, YYYY"));
+$("#currentDay").text(currentDay.format("[Today is ]MMMM D, YYYY "));
+
+var currentTime = dayjs().format("HH");
+console.log(currentTime);
+for(i = 9; i < 18; i++) {
+  if(currentTime > i) {
+    $("#hour-" + i).addClass("past");
+    console.log("1234");
+  } else if(currentTime < i) {
+    $("#hour-" + i).addClass("future");
+    console.log("4567");
+  } else {
+    $("#hour-" + i).addClass("present");
+  }
+}
+
+
+
 $(function () {
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
