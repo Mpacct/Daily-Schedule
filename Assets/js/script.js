@@ -1,6 +1,8 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+
+// Saves the text area of each user input section to a variable
 var nineBlock = document.querySelector("#h9Text");
 var tenBlock = document.querySelector("#h10Text");
 var elevenBlock = document.querySelector("#h11Text");
@@ -10,12 +12,20 @@ var twoBlock = document.querySelector("#h2Text");
 var threeBlock = document.querySelector("#h3Text");
 var fourBlock = document.querySelector("#h4Text");
 var fiveBlock = document.querySelector("#h5Text");
+
+// Saves the .btn class to a variable
 var saveButton = document.querySelector(".btn");
 
+// Saves the current Date to a variable
 var currentDay = dayjs();
+
+// Calls the current date to display as text in the ID of "currentDay"
 $("#currentDay").text(currentDay.format("[Today is ]MMMM D, YYYY "));
 
+//Saves the current Time Hour as a variable
 var currentTime = dayjs().format("HH");
+
+// for loop to add classes of past, present, or future to each div based on their id name and comapring the current hour with their assigned hour
 for(i = 9; i < 18; i++) {
   if(currentTime > i) {
     $("#hour-" + i).addClass("past");
@@ -26,7 +36,7 @@ for(i = 9; i < 18; i++) {
   };
 };
 
-
+// function that Saves an object with user input in local storage
 function saveMessage () {
   var calendarEvent = {
     nineBlockMsg: nineBlock.value.trim(),
@@ -42,6 +52,7 @@ function saveMessage () {
   localStorage.setItem("calendarEvent", JSON.stringify(calendarEvent));
 };
 
+// funtion that loads local storage objects into the text areas upon refreshing / loading the page
 function renderMessage () {
   var lastMessage = JSON.parse(localStorage.getItem("calendarEvent"));
   if (lastMessage !== null) {
@@ -59,17 +70,21 @@ function renderMessage () {
   };
 };
 
+// Function that saves user input into local storage when clicking a button
 saveButton.addEventListener("click", function(event) {
   event.preventDefault();
   saveMessage();
   renderMessage();
 });
 
+// Runs renderMessage function
 function init() {
   renderMessage();
 };
 
+//Runs the init function immediatly when opening the page
 init();
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
