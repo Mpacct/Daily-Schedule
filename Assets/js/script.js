@@ -1,27 +1,75 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+var nineBlock = document.querySelector("#h9Text");
+var tenBlock = document.querySelector("#h10Text");
+var elevenBlock = document.querySelector("#h11Text");
+var twelveBlock = document.querySelector("#h12Text");
+var oneBlock = document.querySelector("#h1Text");
+var twoBlock = document.querySelector("#h2Text");
+var threeBlock = document.querySelector("#h3Text");
+var fourBlock = document.querySelector("#h4Text");
+var fiveBlock = document.querySelector("#h5Text");
+var saveButton = document.querySelector(".btn");
+
 var currentDay = dayjs();
-console.log(currentDay);
 $("#currentDay").text(currentDay.format("[Today is ]MMMM D, YYYY "));
 
 var currentTime = dayjs().format("HH");
-console.log(currentTime);
 for(i = 9; i < 18; i++) {
   if(currentTime > i) {
     $("#hour-" + i).addClass("past");
-    console.log("1234");
   } else if(currentTime < i) {
     $("#hour-" + i).addClass("future");
-    console.log("4567");
   } else {
     $("#hour-" + i).addClass("present");
-  }
-}
+  };
+};
 
 
+function saveMessage () {
+  var calendarEvent = {
+    nineBlockMsg: nineBlock.value.trim(),
+    tenBlockMsg: tenBlock.value.trim(),
+    elevenBlockMsg: elevenBlock.value.trim(),
+    twelveBlockMsg: twelveBlock.value.trim(),
+    oneBlockMsg: oneBlock.value.trim(),
+    twoBlockMsg: twoBlock.value.trim(),
+    threeBlockMsg: threeBlock.value.trim(),
+    fourBlockMsg: fourBlock.value.trim(),
+    fiveBlockMsg: fiveBlock.value.trim(),
+  };
+  localStorage.setItem("calendarEvent", JSON.stringify(calendarEvent));
+};
 
-$(function () {
+function renderMessage () {
+  var lastMessage = JSON.parse(localStorage.getItem("calendarEvent"));
+  if (lastMessage !== null) {
+    nineBlock.innerHTML = lastMessage.nineBlockMsg;
+    tenBlock.innerHTML = lastMessage.tenBlockMsg;
+    elevenBlock.innerHTML = lastMessage.elevenBlockMsg;
+    twelveBlock.innerHTML = lastMessage.twelveBlockMsg;
+    oneBlock.innerHTML = lastMessage.oneBlockMsg;
+    twoBlock.innerHTML = lastMessage.twoBlockMsg;
+    threeBlock.innerHTML = lastMessage.threeBlockMsg;
+    fourBlock.innerHTML = lastMessage.fourBlockMsg;
+    fiveBlock.innerHTML = lastMessage.fiveBlockMsg;
+  } else {
+    return;
+  };
+};
+
+saveButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  saveMessage();
+  renderMessage();
+});
+
+function init() {
+  renderMessage();
+};
+
+init();
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -40,4 +88,3 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
-});
