@@ -14,7 +14,7 @@ var fourBlock = document.querySelector("#h4Text");
 var fiveBlock = document.querySelector("#h5Text");
 
 // Saves the .btn class to a variable
-var saveButton = document.querySelector(".btn");
+var saveButton = document.querySelectorAll(".btn");
 
 // Saves the current Date to a variable
 var currentDay = dayjs();
@@ -70,12 +70,14 @@ function renderMessage () {
   };
 };
 
-// Function that saves user input into local storage when clicking a button
-saveButton.addEventListener("click", function(event) {
-  event.preventDefault();
-  saveMessage();
-  renderMessage();
-});
+// function that loops for through the querySelectorAll variable for buttons and lets makes each "save" button work on a "click" and runs the saveMessage and RenderMessage function.
+for (var i=0; i < saveButton.length; i++) {
+  saveButton[i].addEventListener("click", function(event) {
+    event.preventDefault();
+    saveMessage();
+    renderMessage();
+  });
+};
 
 // Runs renderMessage function
 function init() {
